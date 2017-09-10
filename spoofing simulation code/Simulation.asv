@@ -11,9 +11,9 @@ for  i=1:step
     z_true(:,i+1) = H*x_true(:,i+1) + (0.1)*randn(2,1);
 end
 
-spoof = abs(2*zeros(2,6));
-spoof(1,6) = 4.0441;
-spoof(2,6) = 4.0441;
+spoof = abs(2*ones(2,6));
+% spoof(1,6) = 2;
+% spoof(2,6) = 2;
 
 z_spoof = z_true + spoof;
 
