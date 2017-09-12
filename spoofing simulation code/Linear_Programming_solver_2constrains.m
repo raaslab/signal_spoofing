@@ -1,8 +1,8 @@
 clear all;
 
 %% Parameters
-R=0.1*eye(2);
-Q=0.1*eye(2);
+R=0.5*eye(2);
+Q=0.5*eye(2);
 F=[ 1 0; 0 1];
 u=[1;1];
 H=[1 -0; 0 1];
@@ -10,8 +10,16 @@ H=[1 -0; 0 1];
 Covariance = eye(2);
 P=Covariance;
 
-desired_separation_step = [1:2:10];
-desired_separation = 0.25*desired_separation_step*norm(u,2);
+%desired_separation_step = [1 3 5 7 10 ];
+desired_separation_step = [  5 10];
+% desired_separation_step = [1:3  7:10 17:20];
+% desired_separation_step = [5:15];
+
+% desiTtred_separation = 0.25*desired_separation_step*norm(u,2);
+desired_separation = [1.77 1.5];
+% desired_separation = 0.25*ones(1:11);
+%  desired_separation = 0.25*norm(u,2)*[5:15];
+
 T = max(desired_separation_step);
 
 %% Calculate Kalman Gains
@@ -59,4 +67,7 @@ Q(size(Q,1)-2*T + 1:end,:) = -eye(2*T);
 f = ones(1,2*T);
 b = zeros(length(desired_separation_step) + 2*T, 1);
 b(1:length(desired_separation)) = -desired_separation;
-x = linprog(f,Q,b)
+spoof = linprog(f,Q,b)
+spoof_add(1:T)=spoof(2*(1:T));
+spoof_add = spoof_add';
+
