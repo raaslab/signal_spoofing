@@ -1,4 +1,4 @@
-function [Target_estimate_potition_update, Covatiance_update]=KalmanFilter(Ture_measurement, Target_estimate_potition, Covatiance,u_o)
+function [Target_estimate_potition_update, Covatiance_update, difference]=KalmanFilter(Ture_measurement, Target_estimate_potition, Covatiance,u_o)
  x_o=Target_estimate_potition;
  z=Ture_measurement;
  P=Covatiance;
@@ -13,6 +13,7 @@ function [Target_estimate_potition_update, Covatiance_update]=KalmanFilter(Ture_
  
  %Update
  Kk=P*H*(H*P*H'+R)^(-1);
+ difference = z-H*x_o;
  x_o=x_o+Kk*(z-H*x_o);
  P=(eye(2)-Kk*H)*P;
  

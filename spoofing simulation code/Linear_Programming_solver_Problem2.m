@@ -1,24 +1,27 @@
 clear all;
 
 %% Parameters
-R=0.5*eye(2);
-Q=0.5*eye(2);
+R=0.1*eye(2);
+Q=0.1*eye(2);
 F=[ 1 0; 0 1];
 u=[1;1];
 H=[1 -0; 0 1];
 
+%difference between m_0 and \tilde{m}_0?
+% m_uncertain = [1;1];
+
 Covariance = eye(2);
 P=Covariance;
 
-%desired_separation_step = [1 3 5 7 10 ];
-% desired_separation_step = [  5 10 15 20];
-% desired_separation_step = [1:3  7:10 17:20];
-desired_separation_step = [4:15];
+desired_separation_step = [3:15];
+% desired_separation_step = [ 3 5 9 11 13 15 ];
+% desired_separation_step = [5  10 15];
+% desired_separation_step = [2 6];
 
-% desiTtred_separation = 0.25*desired_separation_step*norm(u,2);
-% desired_separation = [1.7678    3.5355    5.3033    0.0711];
+desired_separation = 0.25*desired_separation_step*norm(u,2);
+% desired_separation = [1.48    0];
 % desired_separation = 0.25*ones(1:11);
- desired_separation = 0.25*norm(u,2)*[4:15];
+%  desired_separation = [2 0];
 
 T = max(desired_separation_step);
 
@@ -70,4 +73,6 @@ b(1:length(desired_separation)) = -desired_separation;
 spoof = linprog(f,Q,b)
 spoof_add(1:T)=spoof(2*(1:T));
 spoof_add = spoof_add';
+
+
 
